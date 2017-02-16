@@ -45,21 +45,17 @@ def connection(conn,addr):
 	except IOError:
 		# Send HTTP response message for file not found
 		# Same format as above, but with code for "Not Found"	
-		connectionSocket.send(bytearray("HTTP/1.1 200\r\n\r\n".encode()))
-		connectionSocket.send(bytearray("<html><head></head><body><h1>404 Not Found</h1></body></html>\r\n".encode()))
+		conn.send(bytearray("HTTP/1.1 200\r\n\r\n".encode()))
+		conn.send(bytearray("<html><head></head><body><h1>404 Not Found</h1></body></html>\r\n".encode()))
 		
 		# Close the client connection socket
-		connectionSocket.close()
-
-
-
+		conn.close()
 
 
 # Create a TCP server socket
 #(AF_INET is used for IPv4 protocols)
 #(SOCK_STREAM is used for TCP)
 serverSocket = socket(AF_INET, SOCK_STREAM)
-threads = []
 
 # Prepare a server socket
 # Assign a port number
@@ -78,7 +74,6 @@ while True:
 	# Set up a new connection from the client
 	connectionSocket, addr = serverSocket.accept()
 	t = threading.Thread(target=connection,args=(connectionSocket,addr))
-	threads.append(t)
 	t.start()
 
 serverSocket.close()  
