@@ -4,6 +4,7 @@
 # Import socket module
 from socket import * 
 
+serverIP = "10.22.76.148"
 # Create a TCP server socket
 #(AF_INET is used for IPv4 protocols)
 #(SOCK_STREAM is used for TCP)
@@ -14,7 +15,7 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 serverPort = 80
 
 # Bind the socket to server address and server port
-serverSocket.bind(("10.22.76.148",serverPort))
+serverSocket.bind((serverIP,serverPort))
 
 # Listen to at most 1 connection at a time
 serverSocket.listen(1)
