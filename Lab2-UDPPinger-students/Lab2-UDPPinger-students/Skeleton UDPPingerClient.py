@@ -4,21 +4,20 @@
 import time
 from socket import *
 
-# Get the server hostname and port as command line arguments                    
-host = # FILL IN START		# FILL IN END
-port = # FILL IN START		# FILL IN END
+# Get the server hostname and port as command line arguments  
+
+host = input("Type in server ip")
+print(host)
+port = eval(input("Type in port"))
+print(port)
 timeout = 1 # in seconds
  
 # Create UDP client socket
-# FILL IN START		
-
-# Note the second parameter is NOT SOCK_STREAM
-# but the corresponding to UDP
+clientSocket = socket(AF_INET, SOCK_DGRAM)
+clientSocket.connect((host,port))
 
 # Set socket timeout as 1 second
-
-
-# FILL IN END
+clientSocket.settimeout(timeout)
 
 # Sequence number of the ping message
 ptime = 0  
@@ -27,25 +26,28 @@ ptime = 0
 while ptime < 10: 
     ptime += 1
     # Format the message to be sent as in the Lab description	
-    data = # FILL IN START		# FILL IN END
+    data = "ping from me"
     
     try:
     	# FILL IN START
     	
 	# Record the "sent time"
-
+        startTime = time.now()
 	# Send the UDP packet with the ping message
-
+        clentSocket.sendto(data.encode('utf-8'),host)
 	# Receive the server response
+        message = clientSocket.recvfrom(1024)
   
 	# Record the "received time"
+        endTime = time.now()
 
 	# Display the server response as an output
+        print(message.decode('utf-8'))
     
 	# Round trip time is the difference between sent and received time
+        print(endTime - startTime)
 
         
-        # FILL IN END
     except:
         # Server does not response
 	# Assume the packet is lost
@@ -53,5 +55,5 @@ while ptime < 10:
         continue
 
 # Close the client socket
-clientsocket.close()
+clientSocket.close()
  
