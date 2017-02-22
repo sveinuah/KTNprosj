@@ -6,11 +6,11 @@ from socket import *
 
 # Get the server hostname and port as command line arguments  
 
-host = input("Type in server ip")
+host = input("Type in server ip: ")
 print(host)
-port = eval(input("Type in port"))
+port = eval(input("Type in port: "))
 print(port)
-timeout = 1 # in seconds
+timeout = 1.0 # in seconds
  
 # Create UDP client socket
 clientSocket = socket(AF_INET, SOCK_DGRAM)
@@ -29,23 +29,22 @@ while ptime < 10:
     data = "ping from me"
     
     try:
-    	# FILL IN START
     	
 	# Record the "sent time"
-        startTime = time.now()
+        startTime = int(round(time.time()*1000))
 	# Send the UDP packet with the ping message
-        clentSocket.sendto(data.encode('utf-8'),host)
+        clientSocket.send(data.encode('utf-8'))
 	# Receive the server response
-        message = clientSocket.recvfrom(1024)
+        message, address = clientSocket.recvfrom(1024)
   
 	# Record the "received time"
-        endTime = time.now()
+        endTime = int(round(time.time()*1000))
 
 	# Display the server response as an output
         print(message.decode('utf-8'))
     
 	# Round trip time is the difference between sent and received time
-        print(endTime - startTime)
+        print("ping =", endTime - startTime, "ms")
 
         
     except:
